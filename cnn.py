@@ -8,32 +8,32 @@ import numpy
 import cv2
 
 # constants
-lr = 0.0003
+lr = 0.0008
 epoch = 8
-batchsize = 32
+batchsize = 64
 imgcheck = 1000  # Checks for that image's index in the test set(0-9999)
 # use imgcheck b/w 0-9990 because it shows 10 images starting from index of imgcheck
-modelname = "cnn.pt"
+modelname = "cnn2.pt"
 
 
 def read_data():
     traindata = processdata.read_input_cnn()
-    print("Train data size is: " ,traindata.shape[0])  # shows number of images in train set
+    print("Train data size is: ", traindata.shape[0])  # shows number of images in train set
     return traindata
 
 
 class Network(nn.Module):
     def __init__(self):
         super(Network, self).__init__()
-        self.l1 = nn.Conv2d(1, 8, 2, 2)
-        self.l2 = nn.Conv2d(8, 16, 4, 4, 1)
+        self.l1 = nn.Conv2d(1, 8, 6, 2)
+        self.l2 = nn.Conv2d(8, 32, 4, 4, 2)
 
         self.l3 = nn.Flatten()  # Flattened into a 256-D vector
-        self.bottle = nn.Linear(256, 200)
-        self.fc2 = nn.Linear(200, 256)
+        self.bottle = nn.Linear(512, 200)
+        self.fc2 = nn.Linear(200, 512)
 
-        self.rl1 = nn.ConvTranspose2d(16, 8, 4, 4, 1)
-        self.rl2 = nn.ConvTranspose2d(8, 1, 2, 2)
+        self.rl1 = nn.ConvTranspose2d(32, 8, 4, 4, 2)
+        self.rl2 = nn.ConvTranspose2d(8, 1, 6, 2)
         return
 
     def forward(self, x):
@@ -44,7 +44,7 @@ class Network(nn.Module):
         x = self.l3(x)
         x = F.relu(self.bottle(x))
         x = F.relu(self.fc2(x))
-        x = x.reshape((-1, 16, 4, 4))
+        x = x.reshape((-1, 32, 4, 4))
 
         x = F.relu(self.rl1(x))
         x = torch.sigmoid(self.rl2(x))
