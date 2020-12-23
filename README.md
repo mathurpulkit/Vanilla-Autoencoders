@@ -6,10 +6,10 @@
 
 #### Here are some examples generated using the model given in code:
 
-Network Type | Original            | Reconstructed
+Network Type | Fully Connected Layers            | Convolution Neural Networks
 :----------------|----------------|----------------:
-Fully Connected Layers | ![Original Image FC](images/fc_orig.png) | ![Reconstructed Image FC](images/fc_regen.png)
-Convolution Neural Networks | ![Original Image CNN](images/cnn_orig.png) | ![Reconstructed Image CNN](images/cnn_regen.png)
+Original | ![Original Image FC](images/fc_orig.png) | ![Original Image CNN](images/cnn_orig.png)
+Reconstructed | ![Reconstructed Image FC](images/fc_regen.png) | ![Reconstructed Image CNN](images/cnn_regen.png)
 
 #### Here are the Loss graphs for Fully connected Layers:
 
